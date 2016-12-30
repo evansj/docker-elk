@@ -10,6 +10,8 @@ services:
       ES_JAVA_OPTS: "-Xms1g -Xmx1g"
     networks:
       - docker_elk
+    volumes:
+      - /opt/elk/elasticsearch/data:/usr/share/elasticsearch/data
   logstash:
     build: logstash/
     command: -f /etc/logstash/conf.d/
@@ -17,6 +19,8 @@ services:
       - ./logstash/config:/etc/logstash/conf.d
     ports:
       - "5000:5000"
+      - "5043:5043"
+      - "5044:5044"
     networks:
       - docker_elk
     depends_on:
